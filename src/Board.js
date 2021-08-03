@@ -19,7 +19,6 @@ class Board extends Component {
 
   createBoard() {
     let board = [];
-    // TODO: create array-of-arrays of true/false values
     for (let y=0;  y < this.props.nrows; y++) {
       let row = []
       for( let x = 0; x < this.props.ncols; x++) {
@@ -42,6 +41,13 @@ class Board extends Component {
         board[y][x] = !board[y][x];
       }
     }
+
+    flipCell(y, x);
+    flipCell(y, x - 1);
+    flipCell(y, x + 1);
+
+    let hasWon = false;
+    this.setState({ board, hasWon });
   }
 
   render() {
@@ -50,7 +56,7 @@ class Board extends Component {
       let row = [];
       for (let x = 0; x < this.props.ncols; x++){
         let coord = `${y}-${x}`
-        row.push(<Cell key={coord} isLit={this.state.board[y][x] }/>);
+        row.push(<Cell key={coord} isLit={this.state.board[y][x]} flipCellsAroundMe={() => this.flipCellsAround(coord)}/>);
       }
       tblBoard.push(<tr key={y}>{row}</tr>);
     }
