@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Cell from "./Cell";
 import './Board.css';
 
+// first we set some default props
 class Board extends Component {
   static defaultProps = {
     nrows: 5,
@@ -9,6 +10,7 @@ class Board extends Component {
     chanceLightStartsOn: 0.25
   };
 
+  // initialize state
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +19,9 @@ class Board extends Component {
     };
   }
 
+  // this function is creating the board, the initial state, a nested array of boolean values. a board with a certain number of rows in it. you start with an empty board [], create your rows and puch them to board. 
+
+  // math.random gives us a value betoween 0-1. and if it is less than .25 it will be true, and we push the cell-lit into the row.
   createBoard() {
     let board = [];
     for (let y=0;  y < this.props.nrows; y++) {
@@ -44,10 +49,10 @@ class Board extends Component {
 
     // increasing or decreasing the x,y coordinate calls flipcell function, this is flipping a cell, and all 4 around it too
     flipCell(y, x);
-    flipCell(y, x - 1);
-    flipCell(y, x + 1);
-    flipCell(y - 1, x);
-    flipCell(y + 1, x);
+    // flipCell(y, x - 1);
+    // flipCell(y, x + 1);
+    // flipCell(y - 1, x);
+    // flipCell(y + 1, x);
 
     // after you flipcells, check everytime if every cell if off/ false this will tell us if we have won. checking every cell, in every row should be false
     let hasWon = board.every(row => row.every(cell => !cell));
@@ -55,6 +60,7 @@ class Board extends Component {
   }
 
   makeTable() {
+    // this function is creating a nested array of boolean true/false values. y = horzontal axis varaible. x = the viertical/ column variable axis.
     let tblBoard = [];
     for (let y = 0; y < this.props.nrows; y++){
       let row = [];
@@ -79,6 +85,7 @@ class Board extends Component {
   render() {
     return (
       <div>
+        {/* this ternary operator is checking, is this.state.hasWon = true? if it is dispay the winner div. then if not : display board-title div and the this.makeTable function. */}
         {this.state.hasWon ? (
           <div className='winner'>
             <span className='neon-orange'>YOU</span>
